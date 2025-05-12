@@ -12,7 +12,14 @@ function gameBoard() {
     }
 
     // This is the method to return the board
-    const getBoard = () => board;
+    //const getBoard = () => board;
+    const getBoard = () => {
+
+        console.clear();
+        for (const key in board) {
+            console.log(board[key]);
+        }
+    };
 
     const markBoard = (row, column, playerMarker) => {
         if (board[row][column] == 0) {
@@ -34,11 +41,11 @@ function gameController() {
     const players = [
         {
             name: player1,
-            marker: 'x'
+            marker: 'X'
         },
         {
             name: player2,
-            marker: 'o'
+            marker: 'O'
         }
     ];
 
@@ -47,13 +54,19 @@ function gameController() {
     const switchPlayer = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     }
+
     const getActivePlayer = () => activePlayer;
 
     const playRound = (row, column) => {
-        console.log(board.getBoard());
         console.log("Marking the token of the player on the board");
         board.markBoard(row, column, getActivePlayer().marker);
-        console.log(board.getBoard());
+        switchPlayer();
+        newRound();
+    }
+
+    const newRound = () => {
+        board.getBoard();
+        console.log(`${getActivePlayer().name}'s turn to play`);
     }
 
     return { switchPlayer, getActivePlayer, playRound };
