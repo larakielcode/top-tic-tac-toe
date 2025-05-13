@@ -1,76 +1,65 @@
-function gameBoard() {
-    const row = 3;
-    const column = 3;
-    const board = [];
+function GameBoard() {
+    const board =
+        [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', '']
+        ];
 
-    // First lets draw and map the board
-    for (let i = 0; i < row; i++) {
-        board[i] = [];
-        for (let j = 0; j < column; j++) {
-            board[i].push(0);
-        }
-    }
+    const printBoard = () => board;
 
-    // This is the method to return the board
-    //const getBoard = () => board;
-    const getBoard = () => {
+    const markBoard = (row, column, marker) => {
 
-        console.clear();
-        for (const key in board) {
-            console.log(board[key]);
-        }
-    };
-
-    const markBoard = (row, column, playerMarker) => {
-        if (board[row][column] == 0) {
-            board[row][column] = playerMarker;
+        if (board[row][column] === '') {
+            board[row][column] = marker;
         } else {
-            console.log('Invalid move');
+            console.log('invalid move');
         }
     }
 
-    return { getBoard, markBoard };
+    return {
+        printBoard, markBoard
+    }
 }
 
 function gameController() {
-    const player1 = 'PlayerOne';
-    const player2 = 'PlayerTwo';
 
-    const board = gameBoard();
+    const game = GameBoard();
 
     const players = [
         {
-            name: player1,
-            marker: 'X'
+            'name': 'Aldin',
+            'marker': 'X'
         },
         {
-            name: player2,
-            marker: 'O'
+            'name': 'Zeke',
+            'marker': 'O'
         }
     ];
 
     let activePlayer = players[0];
 
-    const switchPlayer = () => {
-        activePlayer = activePlayer === players[0] ? players[1] : players[0];
-    }
-
     const getActivePlayer = () => activePlayer;
 
-    const playRound = (row, column) => {
-        console.log("Marking the token of the player on the board");
-        board.markBoard(row, column, getActivePlayer().marker);
-        switchPlayer();
-        newRound();
+    const switchPlayers = () => {
+        activePlayer = (activePlayer == players[0]) ? players[1] : players[0];
     }
 
-    const newRound = () => {
-        board.getBoard();
-        console.log(`${getActivePlayer().name}'s turn to play`);
+    const playGame = (row, column) => {
+        game.markBoard(row, column, getActivePlayer().marker);
+        switchPlayers();
+        startGame();
     }
 
-    return { switchPlayer, getActivePlayer, playRound };
+    const startGame = () => {
+        console.clear();
+        console.table(game.printBoard());
+        console.log(`${getActivePlayer().name}'s turn to move.`);
+    }
 
+    return {
+        switchPlayers, getActivePlayer, playGame, startGame
+    }
 }
 
 const test = gameController();
