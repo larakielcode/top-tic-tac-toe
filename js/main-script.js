@@ -10,10 +10,13 @@ function GameBoard() {
 
     const markBoard = (row, column, marker) => {
 
+        console.clear();
         if (board[row][column] === '') {
             board[row][column] = marker;
+            return true;
         } else {
-            console.log('invalid move');
+            console.log('%c invalid move', 'color: red');
+            return false;
         }
     }
 
@@ -46,13 +49,15 @@ function gameController() {
     }
 
     const playGame = (row, column) => {
-        game.markBoard(row, column, getActivePlayer().marker);
-        switchPlayers();
+        const x = game.markBoard(row, column, getActivePlayer().marker);
+        if (x === true) {
+            switchPlayers();
+        }
+
         startGame();
     }
 
     const startGame = () => {
-        console.clear();
         console.table(game.printBoard());
         console.log(`${getActivePlayer().name}'s turn to move.`);
     }
