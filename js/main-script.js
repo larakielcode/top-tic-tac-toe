@@ -13,17 +13,32 @@ function GameBoard() {
         console.clear();
         if (board[row][column] === '') {
             board[row][column] = marker;
-            return true;
         } else {
             console.log('%c invalid move', 'color: red');
             return false;
         }
     }
 
+    const getAvailableCellOnBoard = () => {
+
+        let cellAvail = 0;
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] == '') {
+                    cellAvail += 1;
+                }
+            }
+        }
+
+        return cellAvail;
+    }
+
     return {
-        printBoard, markBoard
+        printBoard, markBoard, getAvailableCellOnBoard
     }
 }
+
 
 function gameController() {
 
@@ -31,11 +46,11 @@ function gameController() {
 
     const players = [
         {
-            'name': 'Aldin',
+            'name': 'Player 1',
             'marker': 'X'
         },
         {
-            'name': 'Zeke',
+            'name': 'Player 2',
             'marker': 'O'
         }
     ];
@@ -50,7 +65,7 @@ function gameController() {
 
     const playGame = (row, column) => {
         const x = game.markBoard(row, column, getActivePlayer().marker);
-        if (x === true) {
+        if (x !== false) {
             switchPlayers();
         }
 
@@ -60,6 +75,11 @@ function gameController() {
     const startGame = () => {
         console.table(game.printBoard());
         console.log(`${getActivePlayer().name}'s turn to move.`);
+        const cellCounter = game.getAvailableCellOnBoard();
+        console.log(cellCounter);
+        if (cellCounter == 0) {
+            console.log('All cells are occupied, wanna restart the game?'); // this will trigger if all cells are occupied
+        }
     }
 
     return {
@@ -68,3 +88,4 @@ function gameController() {
 }
 
 const test = gameController();
+test.startGame();
