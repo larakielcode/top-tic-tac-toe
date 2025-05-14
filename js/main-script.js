@@ -36,21 +36,12 @@ function GameBoard() {
 
     const checkForWinner = () => {
 
-        let arrSum = '';
+        const topPattern = board[0].join('');
 
-        for (let a = 0; a < 3; a++) {
-            for (let index = 0; index < 3; index++) {
-                arrSum += board[a][index];
-            }
-
-            if (arrSum === 'XXX') {
-                console.log('Player 1 wins');
-            }
-            if (arrSum === 'OOO') {
-                console.log('Player 2 wins');
-            }
-            console.log(board[a]);
+        if (topPattern == 'XXX') {
+            console.log('Player 1 wins');
         }
+
     }
 
     return {
@@ -103,6 +94,7 @@ function gameController() {
 
         if (cellCounter > 0) {
             // check for winner
+            console.log(cellCounter);
             game.checkForWinner();
         }
 
