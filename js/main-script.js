@@ -34,8 +34,27 @@ function GameBoard() {
         return cellAvail;
     }
 
+    const checkForWinner = () => {
+
+        let arrSum = '';
+
+        for (let a = 0; a < 3; a++) {
+            for (let index = 0; index < 3; index++) {
+                arrSum += board[a][index];
+            }
+
+            if (arrSum === 'XXX') {
+                console.log('Player 1 wins');
+            }
+            if (arrSum === 'OOO') {
+                console.log('Player 2 wins');
+            }
+            console.log(board[a]);
+        }
+    }
+
     return {
-        printBoard, markBoard, getAvailableCellOnBoard
+        printBoard, markBoard, getAvailableCellOnBoard, checkForWinner
     }
 }
 
@@ -47,11 +66,13 @@ function gameController() {
     const players = [
         {
             'name': 'Player 1',
-            'marker': 'X'
+            'marker': 'X',
+            'score': 0
         },
         {
             'name': 'Player 2',
-            'marker': 'O'
+            'marker': 'O',
+            'score': 0
         }
     ];
 
@@ -73,13 +94,20 @@ function gameController() {
     }
 
     const startGame = () => {
-        console.table(game.printBoard());
-        console.log(`${getActivePlayer().name}'s turn to move.`);
+
         const cellCounter = game.getAvailableCellOnBoard();
-        console.log(cellCounter);
+        console.log(`Total remaining cells in the board ${cellCounter}`);
         if (cellCounter == 0) {
             console.log('All cells are occupied, wanna restart the game?'); // this will trigger if all cells are occupied
         }
+
+        if (cellCounter > 0) {
+            // check for winner
+            game.checkForWinner();
+        }
+
+        console.table(game.printBoard());
+        console.log(`${getActivePlayer().name}'s turn to move.`);
     }
 
     return {
