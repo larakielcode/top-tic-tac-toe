@@ -6,7 +6,10 @@ function GameBoard() {
             ['', '', '']
         ];
 
-    const printBoard = () => board;
+    const printBoard = () => {
+
+
+    };
 
     const markBoard = (row, column, marker) => {
 
