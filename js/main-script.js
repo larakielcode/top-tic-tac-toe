@@ -105,10 +105,6 @@ function gameController() {
         }
 
         const cellCounter = game.getAvailableCellOnBoard();
-        //console.log(`Total remaining cells in the board ${cellCounter}`);
-        if (cellCounter == 0) {
-            console.log('All cells are occupied, wanna restart the game?'); /* this will trigger if all cells are occupied */
-        }
 
         if (cellCounter > 0) {
             // check for winner
@@ -118,6 +114,8 @@ function gameController() {
             } else {
                 // restart the game and put the score
             }
+        } else {
+            console.log('The match was a draw!, wanna restart the game?');
         }
 
 
