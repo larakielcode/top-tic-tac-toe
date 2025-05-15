@@ -37,10 +37,33 @@ function GameBoard() {
     const checkForWinner = () => {
 
         const topPattern = board[0].join('');
+        const middlePattern = board[1].join('');
+        const bottomPattern = board[2].join('');
+        const diagFirstPattern = board[0][0] + board[1][1] + board[2][2];
+        const diagSecondPattern = board[2][0] + board[1][1] + board[0][2];
+        const firstColumn = board[0][0] + board[1][0] + board[2][0];
+        const secondColumn = board[0][1] + board[1][1] + board[2][1];
+        const thirdColumn = board[0][2] + board[1][2] + board[2][2];
 
-        if (topPattern == 'XXX') {
+        console.log(`top pattern : ${topPattern}`);
+        console.log(`middle pattern : ${middlePattern}`);
+        console.log(`bottom pattern : ${bottomPattern}`);
+        console.log(`right to left pattern : ${diagFirstPattern}`);
+        console.log(`left to right pattern : ${diagSecondPattern}`);
+        console.log(`first column pattern : ${firstColumn}`);
+        console.log(`second column pattern : ${secondColumn}`);
+        console.log(`third column pattern : ${thirdColumn}`);
+        if (topPattern == 'XXX' || middlePattern == 'XXX' || bottomPattern == 'XXX' || diagFirstPattern == 'XXX' || diagSecondPattern == 'XXX' || firstColumn == 'XXX' || secondColumn == 'XXX' || thirdColumn == 'XXX') {
             console.log('Player 1 wins');
+            return true;
         }
+
+        if (topPattern == 'OOO' || middlePattern == 'OOO' || bottomPattern == 'OOO' || diagFirstPattern == 'OOO' || diagSecondPattern == 'OOO' || firstColumn == 'OOO' || secondColumn == 'OOO' || thirdColumn == 'OOO') {
+            console.log('Player 2 wins');
+            return true;
+        }
+
+        return false;
 
     }
 
@@ -81,22 +104,26 @@ function gameController() {
             switchPlayers();
         }
 
-        startGame();
-    }
-
-    const startGame = () => {
-
         const cellCounter = game.getAvailableCellOnBoard();
-        console.log(`Total remaining cells in the board ${cellCounter}`);
+        //console.log(`Total remaining cells in the board ${cellCounter}`);
         if (cellCounter == 0) {
-            console.log('All cells are occupied, wanna restart the game?'); // this will trigger if all cells are occupied
+            console.log('All cells are occupied, wanna restart the game?'); /* this will trigger if all cells are occupied */
         }
 
         if (cellCounter > 0) {
             // check for winner
-            console.log(cellCounter);
-            game.checkForWinner();
+            const isThereAWinner = game.checkForWinner();
+            if (isThereAWinner == false) {
+                startGame();
+            } else {
+                // restart the game and put the score
+            }
         }
+
+
+    }
+
+    const startGame = () => {
 
         console.table(game.printBoard());
         console.log(`${getActivePlayer().name}'s turn to move.`);
