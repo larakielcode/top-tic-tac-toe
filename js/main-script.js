@@ -91,11 +91,11 @@ function GameBoard() {
         const topPattern = board[0] + board[1] + board[2];
         const middlePattern = board[3] + board[4] + board[5];
         const bottomPattern = board[6] + board[7] + board[8];
-        const diagFirstPattern = board[0][0] + board[1][1] + board[2][2];
-        const diagSecondPattern = board[2][0] + board[1][1] + board[0][2];
-        const firstColumn = board[0][0] + board[1][0] + board[2][0];
-        const secondColumn = board[0][1] + board[1][1] + board[2][1];
-        const thirdColumn = board[0][2] + board[1][2] + board[2][2];
+        const diagFirstPattern = board[0] + board[4] + board[8];
+        const diagSecondPattern = board[6] + board[4] + board[2];
+        const firstColumn = board[0] + board[3] + board[6];
+        const secondColumn = board[1] + board[4] + board[7];
+        const thirdColumn = board[2] + board[5] + board[8];
 
         if (topPattern == 'XXX' || middlePattern == 'XXX' || bottomPattern == 'XXX' || diagFirstPattern == 'XXX' || diagSecondPattern == 'XXX' || firstColumn == 'XXX' || secondColumn == 'XXX' || thirdColumn == 'XXX') {
             console.log('Player 1 wins');
