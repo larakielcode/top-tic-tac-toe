@@ -8,6 +8,17 @@ function GameBoard() {
 
     const printBoard = () => {
 
+        const container = document.querySelector('.game-container');
+        let boardLength = board.length;
+        console.log(boardLength);
+        while (boardLength > 0) {
+            for (const key in board) {
+                const gridCell = document.createElement('div');
+                container.appendChild(gridCell);
+                gridCell.textContent = board[key];
+            }
+            boardLength--;
+        }
 
     };
 
