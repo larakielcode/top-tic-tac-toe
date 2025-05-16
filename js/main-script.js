@@ -24,23 +24,15 @@ function GameBoard() {
     };
 
     const updateBoard = () => {
-
+        console.clear();
         let gridCells = Array.from(document.querySelectorAll('.ticbox'));
         console.log(gridCells);
-
-        for (let i = 0; i < gridCells.length; i++) {
-            for (const key in board) {
-                gridCells[i].textContent = board[key];
-            }
-
-        }
-        return
+        gridCells.forEach(cell => console.log(cell.nodeName));
     }
 
 
     const markBoard = (row, column, marker) => {
 
-        console.clear();
         if (board[row][column] === '') {
             board[row][column] = marker;
         } else {
@@ -129,6 +121,8 @@ function gameController() {
     }
 
     const playGame = (row, column) => {
+
+        game.updateBoard();
         const x = game.markBoard(row, column, getActivePlayer().marker);
         if (x !== false) {
             switchPlayers();
@@ -151,7 +145,6 @@ function gameController() {
     }
 
     const startGame = () => {
-        game.updateBoard();
         console.log(`${getActivePlayer().name}'s turn to move.`);
     }
 
