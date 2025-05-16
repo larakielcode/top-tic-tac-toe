@@ -1,55 +1,89 @@
 function GameBoard() {
     const board =
         [
-            ['', '', ''],
-            ['', '', ''],
-            ['', '', '']
+            '', '', '',
+            '', '', '',
+            '', '', ''
         ];
 
     const printBoard = () => {
 
-        let boardLength = board.length;
-
-        while (boardLength > 0) {
-            const container = document.querySelector('.game-container');
-            for (const key in board) {
-                //console.log(`this is a ${key}`);
-                const gridCell = document.createElement('div');
-                container.appendChild(gridCell);
-                gridCell.setAttribute('class', 'ticbox');
-                gridCell.textContent = board[key];
-            }
-            boardLength--;
+        const container = document.querySelector('.game-container');
+        for (const key in board) {
+            //console.log(`this is a ${key}`);
+            const gridCell = document.createElement('div');
+            container.appendChild(gridCell);
+            gridCell.setAttribute('class', 'ticbox');
+            //gridCell.textContent = board[key];
         }
+
     };
 
     const updateBoard = () => {
         console.clear();
         let gridCells = Array.from(document.querySelectorAll('.ticbox'));
+        //let gridCells = document.querySelectorAll('.ticbox');
         console.log(gridCells);
-        gridCells.forEach(cell => console.log(cell.nodeName));
+
+        gridCells.forEach((cell, key) => {
+            cell.textContent = board[key];
+        })
+
+        /* for (let i = 0; i < gridCells.length; i++) {
+            gridCells.textContent = board[i];
+            console.log(`This is the content of the board ${ board[i]}`, board.indexOf(board[i]));
+        } */
+
     }
 
 
     const markBoard = (row, column, marker) => {
-
-        if (board[row][column] === '') {
-            board[row][column] = marker;
-        } else {
-            console.log('%c invalid move', 'color: red');
-            return false;
+        if (row == 0) {
+            switch (column) {
+                case 0:
+                    return (board[0] == '') ? board[0] = marker : false;
+                case 1:
+                    return (board[1] == '') ? board[1] = marker : false;
+                case 2:
+                    return (board[2] == '') ? board[2] = marker : false;
+                default:
+                    break;
+            }
+        }
+        if (row == 1) {
+            switch (column) {
+                case 0:
+                    return (board[3] == '') ? board[3] = marker : false;
+                case 1:
+                    return (board[4] == '') ? board[4] = marker : false;
+                case 2:
+                    return (board[5] == '') ? board[5] = marker : false;
+                default:
+                    break;
+            }
+        }
+        if (row == 2) {
+            switch (column) {
+                case 0:
+                    return (board[6] == '') ? board[6] = marker : false;
+                case 1:
+                    return (board[7] == '') ? board[7] = marker : false;
+                case 2:
+                    return (board[8] == '') ? board[8] = marker : false;
+                default:
+                    break;
+            }
         }
     }
+    //console.log('%c invalid move', 'color: red');
 
     const getAvailableCellOnBoard = () => {
 
         let cellAvail = 0;
 
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (board[i][j] == '') {
-                    cellAvail += 1;
-                }
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] == '') {
+                cellAvail += 1;
             }
         }
 
@@ -58,9 +92,9 @@ function GameBoard() {
 
     const checkForWinner = () => {
 
-        const topPattern = board[0].join('');
-        const middlePattern = board[1].join('');
-        const bottomPattern = board[2].join('');
+        const topPattern = board[0] + board[1] + board[2];
+        const middlePattern = board[3] + board[4] + board[5];
+        const bottomPattern = board[6] + board[7] + board[8];
         const diagFirstPattern = board[0][0] + board[1][1] + board[2][2];
         const diagSecondPattern = board[2][0] + board[1][1] + board[0][2];
         const firstColumn = board[0][0] + board[1][0] + board[2][0];
@@ -98,7 +132,9 @@ function GameBoard() {
 function gameController() {
 
     const game = GameBoard();
+
     game.printBoard();
+
     const players = [
         {
             'name': 'Player 1',
@@ -122,9 +158,11 @@ function gameController() {
 
     const playGame = (row, column) => {
 
-        game.updateBoard();
         const x = game.markBoard(row, column, getActivePlayer().marker);
-        if (x !== false) {
+
+        game.updateBoard();
+
+        if (typeof x !== 'boolean') {
             switchPlayers();
         }
 
