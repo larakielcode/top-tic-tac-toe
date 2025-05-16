@@ -6,6 +6,7 @@ function GameBoard() {
             '', '', ''
         ];
 
+    // This method will print the board on the screen
     const printBoard = () => {
 
         const container = document.querySelector('.game-container');
@@ -19,24 +20,18 @@ function GameBoard() {
 
     };
 
+    // This method will update the game board on screen upon user entry
     const updateBoard = () => {
-        console.clear();
+
         let gridCells = Array.from(document.querySelectorAll('.ticbox'));
-        //let gridCells = document.querySelectorAll('.ticbox');
-        console.log(gridCells);
 
         gridCells.forEach((cell, key) => {
             cell.textContent = board[key];
         })
 
-        /* for (let i = 0; i < gridCells.length; i++) {
-            gridCells.textContent = board[i];
-            console.log(`This is the content of the board ${ board[i]}`, board.indexOf(board[i]));
-        } */
-
     }
 
-
+    // This method will mark the tic tac toe board for the user entry
     const markBoard = (row, column, marker) => {
         if (row == 0) {
             switch (column) {
@@ -75,8 +70,8 @@ function GameBoard() {
             }
         }
     }
-    //console.log('%c invalid move', 'color: red');
 
+    // This method will get if there are still any available cell on the board for the user to play
     const getAvailableCellOnBoard = () => {
 
         let cellAvail = 0;
@@ -90,6 +85,7 @@ function GameBoard() {
         return cellAvail;
     }
 
+    // This method will check everytime the user enter an entry to check for winning patterns
     const checkForWinner = () => {
 
         const topPattern = board[0] + board[1] + board[2];
@@ -101,14 +97,6 @@ function GameBoard() {
         const secondColumn = board[0][1] + board[1][1] + board[2][1];
         const thirdColumn = board[0][2] + board[1][2] + board[2][2];
 
-        console.log(`top pattern : ${topPattern}`);
-        console.log(`middle pattern : ${middlePattern}`);
-        console.log(`bottom pattern : ${bottomPattern}`);
-        console.log(`right to left pattern : ${diagFirstPattern}`);
-        console.log(`left to right pattern : ${diagSecondPattern}`);
-        console.log(`first column pattern : ${firstColumn}`);
-        console.log(`second column pattern : ${secondColumn}`);
-        console.log(`third column pattern : ${thirdColumn}`);
         if (topPattern == 'XXX' || middlePattern == 'XXX' || bottomPattern == 'XXX' || diagFirstPattern == 'XXX' || diagSecondPattern == 'XXX' || firstColumn == 'XXX' || secondColumn == 'XXX' || thirdColumn == 'XXX') {
             console.log('Player 1 wins');
             return true;
