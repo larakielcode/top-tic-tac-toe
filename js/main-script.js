@@ -13,13 +13,30 @@ function GameBoard() {
         while (boardLength > 0) {
             const container = document.querySelector('.game-container');
             for (const key in board) {
+                //console.log(`this is a ${key}`);
                 const gridCell = document.createElement('div');
                 container.appendChild(gridCell);
+                gridCell.setAttribute('class', 'ticbox');
                 gridCell.textContent = board[key];
             }
             boardLength--;
         }
     };
+
+    const updateBoard = () => {
+
+        let gridCells = Array.from(document.querySelectorAll('.ticbox'));
+        console.log(gridCells);
+
+        for (let i = 0; i < gridCells.length; i++) {
+            for (const key in board) {
+                gridCells[i].textContent = board[key];
+            }
+
+        }
+        return
+    }
+
 
     const markBoard = (row, column, marker) => {
 
@@ -81,7 +98,7 @@ function GameBoard() {
     }
 
     return {
-        printBoard, markBoard, getAvailableCellOnBoard, checkForWinner
+        printBoard, markBoard, getAvailableCellOnBoard, checkForWinner, updateBoard
     }
 }
 
@@ -89,7 +106,7 @@ function GameBoard() {
 function gameController() {
 
     const game = GameBoard();
-
+    game.printBoard();
     const players = [
         {
             'name': 'Player 1',
@@ -134,7 +151,7 @@ function gameController() {
     }
 
     const startGame = () => {
-        game.printBoard();
+        game.updateBoard();
         console.log(`${getActivePlayer().name}'s turn to move.`);
     }
 
