@@ -8,10 +8,10 @@ function GameBoard() {
 
     const printBoard = () => {
 
-        const container = document.querySelector('.game-container');
         let boardLength = board.length;
-        console.log(boardLength);
+
         while (boardLength > 0) {
+            const container = document.querySelector('.game-container');
             for (const key in board) {
                 const gridCell = document.createElement('div');
                 container.appendChild(gridCell);
@@ -19,7 +19,6 @@ function GameBoard() {
             }
             boardLength--;
         }
-
     };
 
     const markBoard = (row, column, marker) => {
@@ -132,12 +131,10 @@ function gameController() {
             console.log('The match was a draw!, wanna restart the game?');
         }
 
-
     }
 
     const startGame = () => {
-
-        console.table(game.printBoard());
+        game.printBoard();
         console.log(`${getActivePlayer().name}'s turn to move.`);
     }
 
