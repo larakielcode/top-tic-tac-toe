@@ -1,21 +1,30 @@
 :root {
-
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Barrio', system-ui;
     background-color: #B7B1F2;
     color: #333;
+}
+
+h1 {
+    padding: 0;
+    font-size: 4rem;
+    color: #d640e4;
+    text-shadow: 2px 2px 2px black;
 }
 
 body {
     margin: 0;
     padding: 0;
     display: flex;
+    height: 100dvh;
     justify-content: center;
     align-items: center;
-    height: 100dvh;
+    background: url('../images/splat\ bg.png');
+    background-position: center;
+    background-repeat: repeat;
 }
 
 .container {
-    background-color: #d5d1ff;
+    background-color: rgba(172, 128, 255, 0.2);
     padding: 50px;
     border-radius: 5%;
     display: flex;
@@ -28,12 +37,13 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     grid-auto-rows: 100px;
-    gap: 10px;
+    gap: 20px;
 }
 
 .game-container>* {
-    border: 1px solid #7c78a8;
-    border-radius: 50%;
+    border: 10px solid rgba(247, 117, 139, 0.5);
+    background-color: rgb(232, 250, 255);
+    border-radius: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
