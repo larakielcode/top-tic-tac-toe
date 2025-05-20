@@ -23,7 +23,7 @@ function GameBoard() {
     // This method will update the game board on screen upon user entry
     const updateBoard = () => {
 
-        let gridCells = Array.from(document.querySelectorAll('.ticbox'));
+        let gridCells = document.querySelectorAll('.ticbox');
 
         gridCells.forEach((cell, key) => {
             cell.textContent = board[key];
@@ -32,8 +32,11 @@ function GameBoard() {
     }
 
     // This method will mark the tic tac toe board for the user entry
-    const markBoard = (row, column, marker) => {
-        if (row == 0) {
+    const markBoard = (key, marker) => {
+
+        return board[key] == '' ? board[key] = marker : false;
+
+        /* if (row == 0) {
             switch (column) {
                 case 0:
                     return (board[0] == '') ? board[0] = marker : false;
@@ -68,7 +71,7 @@ function GameBoard() {
                 default:
                     break;
             }
-        }
+        } */
     }
 
     // This method will get if there are still any available cell on the board for the user to play
@@ -144,11 +147,11 @@ function gameController() {
         activePlayer = (activePlayer == players[0]) ? players[1] : players[0];
     }
 
-    const playGame = (row, column) => {
+    /* const playGame = (key, marker) => {
 
-        const x = game.markBoard(row, column, getActivePlayer().marker);
+        const x = game.markBoard(key, marker);
 
-        game.updateBoard();
+        //game.updateBoard();
 
         if (typeof x !== 'boolean') {
             switchPlayers();
@@ -168,14 +171,27 @@ function gameController() {
             console.log('The match was a draw!, wanna restart the game?');
         }
 
-    }
+    } */
 
     const startGame = () => {
+        let x;
+
+        const allBox = document.querySelectorAll('.ticbox');
+
         console.log(`${getActivePlayer().name}'s turn to move.`);
+        allBox.forEach((cell, key) => cell.addEventListener('click', () => {
+            x = game.markBoard(key, getActivePlayer().marker);
+            game.updateBoard();
+            console.log(x);
+            if (typeof x !== 'boolean') {
+                switchPlayers();
+            }
+            console.log(`${getActivePlayer().name}'s turn to move.`);
+        }));
     }
 
     return {
-        switchPlayers, getActivePlayer, playGame, startGame
+        switchPlayers, getActivePlayer, startGame
     }
 }
 
