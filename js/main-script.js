@@ -36,42 +36,6 @@ function GameBoard() {
 
         return board[key] == '' ? board[key] = marker : false;
 
-        /* if (row == 0) {
-            switch (column) {
-                case 0:
-                    return (board[0] == '') ? board[0] = marker : false;
-                case 1:
-                    return (board[1] == '') ? board[1] = marker : false;
-                case 2:
-                    return (board[2] == '') ? board[2] = marker : false;
-                default:
-                    break;
-            }
-        }
-        if (row == 1) {
-            switch (column) {
-                case 0:
-                    return (board[3] == '') ? board[3] = marker : false;
-                case 1:
-                    return (board[4] == '') ? board[4] = marker : false;
-                case 2:
-                    return (board[5] == '') ? board[5] = marker : false;
-                default:
-                    break;
-            }
-        }
-        if (row == 2) {
-            switch (column) {
-                case 0:
-                    return (board[6] == '') ? board[6] = marker : false;
-                case 1:
-                    return (board[7] == '') ? board[7] = marker : false;
-                case 2:
-                    return (board[8] == '') ? board[8] = marker : false;
-                default:
-                    break;
-            }
-        } */
     }
 
     // This method will get if there are still any available cell on the board for the user to play
@@ -147,38 +111,12 @@ function gameController() {
         activePlayer = (activePlayer == players[0]) ? players[1] : players[0];
     }
 
-    /* const playGame = (key, marker) => {
-
-        const x = game.markBoard(key, marker);
-
-        //game.updateBoard();
-
-        if (typeof x !== 'boolean') {
-            switchPlayers();
-        }
-
-        const cellCounter = game.getAvailableCellOnBoard();
-
-        if (cellCounter > 0) {
-            // check for winner
-            const isThereAWinner = game.checkForWinner();
-            if (isThereAWinner == false) {
-                startGame();
-            } else {
-                // restart the game and put the score
-            }
-        } else {
-            console.log('The match was a draw!, wanna restart the game?');
-        }
-
-    } */
-
     const startGame = () => {
         let x;
 
         const allBox = document.querySelectorAll('.ticbox');
 
-        console.log(`${getActivePlayer().name}'s turn to move.`);
+        //console.log(`${getActivePlayer().name}'s turn to move.`);
         allBox.forEach((cell, key) => cell.addEventListener('click', () => {
             x = game.markBoard(key, getActivePlayer().marker);
             game.updateBoard();
@@ -186,7 +124,6 @@ function gameController() {
             if (typeof x !== 'boolean') {
                 switchPlayers();
             }
-            console.log(`${getActivePlayer().name}'s turn to move.`);
         }));
     }
 

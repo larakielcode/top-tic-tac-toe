@@ -33,6 +33,10 @@ body {
     align-items: center;
 }
 
+.game-buttons {
+    margin-top: 20px;
+}
+
 .game-container {
     display: grid;
     grid-template-columns: repeat(3, 100px);
