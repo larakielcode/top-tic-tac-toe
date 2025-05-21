@@ -14,8 +14,12 @@
 <body>
     <div class="container">
         <h1>TIC TAC TOE</h1>
-        <p class="announce">Announce here</p>
+        <p class="announce"></p>
         <div class="game-container"></div>
+        <div class="etc-area">
+            <span>player 1 : </span><p id="player1-name"></p>
+            <span>player 2 : </span><p id="player2-name"></p>
+        </div>
     </div>
 
     <dialog player-system-modal>
@@ -36,6 +40,8 @@
         const closeBtn = document.querySelector('#close-modal');
         const myDialog = document.querySelector('[player-system-modal]');
         const startBtn = document.querySelector('#start-game');
+        const player1Name = document.querySelector('#player1-name');
+        const player2Name = document.querySelector('#player2-name');
 
         closeBtn.addEventListener('click', () => {
             myDialog.close();
@@ -55,6 +61,8 @@
                 alert('Aliases should be supplied');
             } else {
                 myDialog.close();
+                player1Name.textContent = player1.value;
+                player2Name.textContent = player2.value;
                 const test = gameController();
                 test.startGame();
             }

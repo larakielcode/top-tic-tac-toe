@@ -6,6 +6,8 @@ function GameBoard() {
             '', '', ''
         ];
 
+    let winningPlayer = null;
+
     // This method will print the board on the screen
     const printBoard = () => {
 
@@ -53,7 +55,8 @@ function GameBoard() {
     }
 
     // This method will check everytime the user enter an entry to check for winning patterns
-    const checkForWinner = () => {
+    const checkPattern = (cellCount) => {
+
 
         const topPattern = board[0] + board[1] + board[2];
         const middlePattern = board[3] + board[4] + board[5];
@@ -74,12 +77,19 @@ function GameBoard() {
             return true;
         }
 
-        return false;
 
+        if (cellCount == 0 && winningPlayer == null) {
+            winningPlayer = "Its a draw";
+        }
+
+        return false;
     }
 
+    const getWinner = () => { return winningPlayer; }
+
+
     return {
-        printBoard, markBoard, getAvailableCellOnBoard, checkForWinner, updateBoard
+        printBoard, markBoard, getAvailableCellOnBoard, checkPattern, updateBoard, getWinner
     }
 }
 
@@ -107,27 +117,48 @@ function gameController() {
 
     const getActivePlayer = () => activePlayer;
 
+    const setPlayerName = () => {
+        const player1 = document.querySelector('#first_player');
+        const player2 = document.querySelector('#second_player');
+
+        players[0].name = player1.value;
+        players[1].name = player2.value;
+    }
+
     const switchPlayers = () => {
         activePlayer = (activePlayer == players[0]) ? players[1] : players[0];
     }
 
     const startGame = () => {
+
+        setPlayerName();
+
         let x;
 
         const allBox = document.querySelectorAll('.ticbox');
+        const notice = document.querySelector('.announce');
 
         //console.log(`${getActivePlayer().name}'s turn to move.`);
+        notice.textContent = `${getActivePlayer().name}'s turn to move.`
         allBox.forEach((cell, key) => cell.addEventListener('click', () => {
             x = game.markBoard(key, getActivePlayer().marker);
             game.updateBoard();
-            console.log(x);
             if (typeof x !== 'boolean') {
                 switchPlayers();
             }
+            const cellCount = game.getAvailableCellOnBoard();
+            game.checkPattern(cellCount);
+            const winner = game.getWinner();
+            if (winner == null) {
+                notice.textContent = `${getActivePlayer().name}'s turn to move.`
+            } else {
+                notice.textContent = winner;
+            }
+
         }));
     }
 
     return {
-        switchPlayers, getActivePlayer, startGame
+        switchPlayers, getActivePlayer, startGame, setPlayerName
     }
 }
