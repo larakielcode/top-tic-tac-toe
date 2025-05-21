@@ -131,6 +131,3 @@ function gameController() {
         switchPlayers, getActivePlayer, startGame
     }
 }
-
-const test = gameController();
-test.startGame();
