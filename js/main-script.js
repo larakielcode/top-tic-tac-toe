@@ -1,3 +1,5 @@
+const announceDiv = document.querySelector('.announce');
+
 function GameBoard() {
     const board =
         [
@@ -117,12 +119,10 @@ function gameController() {
 
     const getActivePlayer = () => activePlayer;
 
-    const setPlayerName = () => {
-        const player1 = document.querySelector('#first_player');
-        const player2 = document.querySelector('#second_player');
+    const setPlayerName = (name1, name2) => {
 
-        players[0].name = player1.value;
-        players[1].name = player2.value;
+        players[0].name = name1;
+        players[1].name = name2;
     }
 
     const switchPlayers = () => {
@@ -136,11 +136,9 @@ function gameController() {
         let x;
 
         const allBox = document.querySelectorAll('.ticbox');
-        const notice = document.querySelector('.announce');
 
-        //console.log(`${getActivePlayer().name}'s turn to move.`);
-        notice.textContent = `${getActivePlayer().name}'s turn to move.`
         allBox.forEach((cell, key) => cell.addEventListener('click', () => {
+
             x = game.markBoard(key, getActivePlayer().marker);
             game.updateBoard();
             if (typeof x !== 'boolean') {
@@ -150,9 +148,9 @@ function gameController() {
             game.checkPattern(cellCount);
             const winner = game.getWinner();
             if (winner == null) {
-                notice.textContent = `${getActivePlayer().name}'s turn to move.`
+                announceDiv.textContent = `${getActivePlayer().name}'s turn to move.`
             } else {
-                notice.textContent = winner;
+                announceDiv.textContent = winner;
             }
 
         }));
@@ -162,3 +160,49 @@ function gameController() {
         switchPlayers, getActivePlayer, startGame, setPlayerName
     }
 }
+
+function loadTheGame() {
+    const modalOpenBtn = document.querySelector('#play-game-first');
+    const modal = document.querySelector('[player-system-modal]');
+    const closeBtnModal = document.querySelector('#close-modal');
+    const startGameBtn = document.querySelector('#start-game');
+
+    modalOpenBtn.onclick = () => { modal.showModal(); } // Open modal
+    closeBtnModal.onclick = () => { modal.close(); } // Close modal
+    const test = gameController();
+    test.startGame();
+
+    startGameBtn.addEventListener('click', () => {
+        const player1Details = document.querySelector('#first_player');
+        const player2Details = document.querySelector('#second_player');
+
+        if (player1Details.value == '' || player2Details.value == '') {
+            alert('Please supply all the fields marked with (*).');
+        } else {
+            modal.close();
+            //modalOpenBtn.style.display = 'none';
+            loadGameDisplay(player1Details.value, player2Details.value, modalOpenBtn, test);
+        }
+
+    });
+
+}
+
+function loadGameDisplay(p1Name, p2Name, modalBtn, test) {
+    const gameContainer = document.querySelector('.game-container');
+    const etcArea = document.querySelector('.etc-area');
+    const p1 = document.querySelector('#player1-name');
+    const p2 = document.querySelector('#player2-name');
+
+    announceDiv.style.opacity = 1;
+    console.log(test);
+    modalBtn.style.display = 'none';
+    gameContainer.style.pointerEvents = 'all';
+    etcArea.style.opacity = 1;
+    p1.textContent = p1Name;
+    p2.textContent = p2Name;
+    test.setPlayerName(p1Name, p2Name);
+    announceDiv.textContent = `${test.getActivePlayer().name}'s turn to move.`;
+}
+
+window.onload = () => { loadTheGame(); }
