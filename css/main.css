@@ -98,10 +98,12 @@ input[type=text]:focus {
 
 dialog:open {
     opacity: 1;
+    transform: scaleY(1);
 }
 
 dialog {
     opacity: 0;
+    transform: scaleY(0);
     width: 350px;
     display: flex;
     flex-flow: column wrap;
