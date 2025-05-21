@@ -16,6 +16,7 @@
         <h1>TIC TAC TOE</h1>
         <p class="announce"></p>
         <div class="game-container"></div>
+        <button type="button" id="play-game-first">Play A Game?</button>
         <div class="etc-area">
             <span>player 1 : </span><p id="player1-name"></p>
             <span>player 2 : </span><p id="player2-name"></p>
@@ -34,14 +35,21 @@
         </div>
     </dialog>
 
-
     <script>
         const preventClosing = true;
+        const gameContainer = document.querySelector('.game-container');
+        const etcArea = document.querySelector('.etc-area');
+        const startTheGame = document.querySelector('#play-game-first');
         const closeBtn = document.querySelector('#close-modal');
         const myDialog = document.querySelector('[player-system-modal]');
         const startBtn = document.querySelector('#start-game');
         const player1Name = document.querySelector('#player1-name');
         const player2Name = document.querySelector('#player2-name');
+        const counterGame = false;
+
+        startTheGame.onclick = () => {
+            myDialog.showModal();
+        }
 
         closeBtn.addEventListener('click', () => {
             myDialog.close();
@@ -63,13 +71,18 @@
                 myDialog.close();
                 player1Name.textContent = player1.value;
                 player2Name.textContent = player2.value;
-                const test = gameController();
-                test.startGame();
+                gameContainer.style.pointerEvents = 'all';
+                etcArea.style.opacity = 1;
+                startTheGame.style.display = 'none';
             }
         });
 
         // Load the modal on startup
-        window.onload = () => { myDialog.showModal(); };
+        window.onload = () => { 
+
+                const test = gameController();
+                test.startGame();
+         };
 
     </script>
 
