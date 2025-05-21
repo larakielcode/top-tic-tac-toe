@@ -190,15 +190,14 @@ function loadTheGame() {
 
 function loadGameDisplay(p1Name, p2Name, modalBtn, test) {
     const gameContainer = document.querySelector('.game-container');
-    const etcArea = document.querySelector('.etc-area');
     const p1 = document.querySelector('#player1-name');
     const p2 = document.querySelector('#player2-name');
+    const playerLabels = document.querySelectorAll('.player-label');
 
     announceDiv.style.opacity = 1;
-    console.log(test);
+    playerLabels.forEach(cell => cell.style.opacity = 1);
     modalBtn.style.display = 'none';
     gameContainer.style.pointerEvents = 'all';
-    etcArea.style.opacity = 1;
     p1.textContent = p1Name;
     p2.textContent = p2Name;
     test.setPlayerName(p1Name, p2Name);

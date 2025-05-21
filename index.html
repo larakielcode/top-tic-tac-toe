@@ -15,14 +15,18 @@
     <div class="container">
         <h1>TIC TAC TOE</h1>
         <p class="announce"></p>
-        <div class="game-container"></div>
-        <button type="button" id="play-game-first">Play A Game?</button>
-        <div class="etc-area">
-            <span>player 1 : </span>
-            <p id="player1-name"></p>
-            <span>player 2 : </span>
-            <p id="player2-name"></p>
+        <div class="middle-content">
+            <div class="player-label">
+                <span><strong><em>Player 1 :</em></strong></span>
+                <p id="player1-name"></p>
+            </div>
+            <div class="game-container"></div>
+            <div class="player-label">
+                <span><strong><em>Player 2 :</em></strong></span>
+                <p id="player2-name"></p>
+            </div>
         </div>
+        <button type="button" id="play-game-first">Play A Game?</button>
     </div>
 
     <dialog player-system-modal>
