@@ -35,8 +35,19 @@
         const preventClosing = true;
         const closeBtn = document.querySelector('#close-modal');
         const myDialog = document.querySelector('[player-system-modal]');
+        const startBtn = document.querySelector('#start-game');
 
-        closeBtn.addEventListener('click', (e) => {
+        closeBtn.addEventListener('click', () => {
+            myDialog.close();
+        });
+
+        myDialog.addEventListener('keydown', (event) => {
+            if (event.key == 'Escape' && preventClosing) {
+                event.preventDefault();
+            }
+        });
+
+        startBtn.addEventListener('click', (e) => {
             const player1 = document.querySelector('#first_player');
             const player2 = document.querySelector('#second_player');
 
@@ -46,11 +57,6 @@
                 myDialog.close();
             }
         });
-        myDialog.addEventListener('keydown', (event) => {
-            if (event.key == 'Escape' && preventClosing) {
-                event.preventDefault();
-            }
-        })
 
         // Load the modal on startup
         window.onload = () => { myDialog.showModal(); };
