@@ -132,5 +132,5 @@ function gameController() {
     }
 }
 
-const test = gameController();
-test.startGame();
+/* const test = gameController();
+test.startGame(); */
