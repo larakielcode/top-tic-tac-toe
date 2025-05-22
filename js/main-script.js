@@ -11,9 +11,8 @@ function GameBoard() {
     let winningPlayer = null;
 
     // This method will print the board on the screen
-    const printBoard = () => {
+    const printBoard = (container) => {
 
-        const container = document.querySelector('.game-container');
         for (const key in board) {
             //console.log(`this is a ${key}`);
             const gridCell = document.createElement('div');
@@ -23,6 +22,21 @@ function GameBoard() {
         }
 
     };
+
+    const clearScreen = (container) => {
+
+        const cellgrid = document.querySelectorAll('.ticbox');
+
+        cellgrid.forEach(cell => container.removeChild(cell));
+    }
+
+    const clearBoard = () => {
+
+        // empty the board arry
+        while (board.length > 0) {
+            board.pop();
+        }
+    }
 
     // This method will update the game board on screen upon user entry
     const updateBoard = () => {
@@ -90,18 +104,17 @@ function GameBoard() {
 
     const getWinner = () => { return winningPlayer; }
 
-
     return {
-        printBoard, markBoard, getAvailableCellOnBoard, checkPattern, updateBoard, getWinner
+        printBoard, markBoard, getAvailableCellOnBoard, checkPattern, updateBoard, getWinner, clearBoard, clearScreen
     }
 }
 
 
 function gameController() {
-
+    const container = document.querySelector('.game-container');
     const game = GameBoard();
 
-    game.printBoard();
+    game.printBoard(container);
 
     const players = [
         {
@@ -151,19 +164,30 @@ function gameController() {
             } else {
                 const whoWins = (winner == 'Player 1') ? `${players[0].name} Wins` : `${players[1].name} Wins`
                 announceDiv.textContent = whoWins;
-                // add reset game function here
+                //game.clearBoard(container, allBox);
+                finishGame();
             }
 
         }));
     }
 
+    const finishGame = () => {
+
+        container.style.pointerEvents = 'none';
+        const restartGame = document.querySelector('#restart-game');
+
+        restartGame.style.display = 'block';
+
+        restartGame.onclick = () => { location.reload(); }
+
+    }
+
     return {
-        switchPlayers, getActivePlayer, startGame, setPlayerName
+        switchPlayers, getActivePlayer, startGame, setPlayerName, finishGame
     }
 }
 
 function loadTheGame() {
-    let firstLoaded = true;
     const modalOpenBtn = document.querySelector('#play-game-first');
     const modal = document.querySelector('[player-system-modal]');
     const startGameBtn = document.querySelector('#start-game');
@@ -206,7 +230,6 @@ function loadTheGame() {
         gameContainer.style.pointerEvents = 'all';
         announceDiv.style.opacity = '1';
         modalOpenBtn.style.display = 'none';
-
     }
 
 }
