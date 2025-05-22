@@ -71,12 +71,13 @@ function GameBoard() {
 
         if (topPattern == 'XXX' || middlePattern == 'XXX' || bottomPattern == 'XXX' || diagFirstPattern == 'XXX' || diagSecondPattern == 'XXX' || firstColumn == 'XXX' || secondColumn == 'XXX' || thirdColumn == 'XXX') {
             console.log('Player 1 wins');
-            return true;
+            //return true;
+            winningPlayer = 'Player 1';
         }
 
         if (topPattern == 'OOO' || middlePattern == 'OOO' || bottomPattern == 'OOO' || diagFirstPattern == 'OOO' || diagSecondPattern == 'OOO' || firstColumn == 'OOO' || secondColumn == 'OOO' || thirdColumn == 'OOO') {
             console.log('Player 2 wins');
-            return true;
+            winningPlayer = 'Player 2';
         }
 
 
@@ -131,8 +132,6 @@ function gameController() {
 
     const startGame = () => {
 
-        setPlayerName();
-
         let x;
 
         const allBox = document.querySelectorAll('.ticbox');
@@ -150,7 +149,9 @@ function gameController() {
             if (winner == null) {
                 announceDiv.textContent = `${getActivePlayer().name}'s turn to move.`
             } else {
-                announceDiv.textContent = winner;
+                const whoWins = (winner == 'Player 1') ? `${players[0].name} Wins` : `${players[1].name} Wins`
+                announceDiv.textContent = whoWins;
+                // add reset game function here
             }
 
         }));
@@ -162,46 +163,52 @@ function gameController() {
 }
 
 function loadTheGame() {
+    let firstLoaded = true;
     const modalOpenBtn = document.querySelector('#play-game-first');
     const modal = document.querySelector('[player-system-modal]');
-    const closeBtnModal = document.querySelector('#close-modal');
     const startGameBtn = document.querySelector('#start-game');
+    const gameContainer = document.querySelector('.game-container');
+    const modalCloseBtn = document.querySelector('#set-player-game');
 
-    modalOpenBtn.onclick = () => { modal.showModal(); } // Open modal
-    closeBtnModal.onclick = () => { modal.close(); } // Close modal
+    modalCloseBtn.onclick = () => { modal.close(); }
+
     const test = gameController();
-    test.startGame();
 
-    startGameBtn.addEventListener('click', () => {
-        const player1Details = document.querySelector('#first_player');
-        const player2Details = document.querySelector('#second_player');
+    modalOpenBtn.addEventListener('click', () => {
 
-        if (player1Details.value == '' || player2Details.value == '') {
-            alert('Please supply all the fields marked with (*).');
-        } else {
-            modal.close();
-            //modalOpenBtn.style.display = 'none';
-            loadGameDisplay(player1Details.value, player2Details.value, modalOpenBtn, test);
-        }
+        modal.showModal();
+
+        firstLoaded = false;
+
+        const p1 = document.querySelector('#player1-name');
+        const p2 = document.querySelector('#player2-name');
+
+        const player1Name = (p1.value == 'Player 1 Name') ? 'Player 1' : p1.value;
+        const player2Name = (p2.value == 'Player 2 Name') ? 'Player 2' : p2.value;
+
+        test.setPlayerName(player1Name, player2Name);
+        console.log(player1Name, player2Name);
+
+        test.startGame();
 
     });
 
-}
+    startGameBtn.addEventListener('click', () => {
 
-function loadGameDisplay(p1Name, p2Name, modalBtn, test) {
-    const gameContainer = document.querySelector('.game-container');
-    const p1 = document.querySelector('#player1-name');
-    const p2 = document.querySelector('#player2-name');
-    const playerLabels = document.querySelectorAll('.player-label');
+        displayStartGame();
+        announceDiv.textContent = `${test.getActivePlayer().name}'s turn to move`;
+        modal.close();
 
-    announceDiv.style.opacity = 1;
-    playerLabels.forEach(cell => cell.style.opacity = 1);
-    modalBtn.style.display = 'none';
-    gameContainer.style.pointerEvents = 'all';
-    p1.textContent = p1Name;
-    p2.textContent = p2Name;
-    test.setPlayerName(p1Name, p2Name);
-    announceDiv.textContent = `${test.getActivePlayer().name}'s turn to move.`;
+    });
+
+    function displayStartGame() {
+
+        gameContainer.style.pointerEvents = 'all';
+        announceDiv.style.opacity = '1';
+        modalOpenBtn.style.display = 'none';
+
+    }
+
 }
 
 window.onload = () => { loadTheGame(); }

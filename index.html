@@ -21,12 +21,12 @@
         <div class="middle-content">
             <div class="player-label">
                 <span><strong><em>Player 1 :</em></strong></span>
-                <p id="player1-name"></p>
+                <input type="text" name="player1-name" id="player1-name" value="Player 1 Name">
             </div>
             <div class="game-container"></div>
             <div class="player-label">
                 <span><strong><em>Player 2 :</em></strong></span>
-                <p id="player2-name"></p>
+                <input type="text" name="player2-name" id="player2-name" value="Player 2 Name">
             </div>
         </div>
         <button type="button" id="play-game-first">Play A Game?</button>
@@ -35,12 +35,9 @@
     <dialog player-system-modal>
         <h1>Tic Tac Toe</h1>
         <div class="detail">
-            <label for="first_player"><span> * </span>Player 1 Alias</label>
-            <input type="text" name="first_player" id="first_player" placeholder="First player name...">
-            <label for="first_player"><span> * </span>Player 2 Alias</label>
-            <input type="text" name="second_player" id="second_player" placeholder="Second player name...">
+            <p id="dialognotice"><em><strong>Notice:</strong> If you have not set any name to either players name , it will use the default name of players.</em></p>
             <button id="start-game">Start the Game</button>
-            <button id="close-modal">Close dialog</button>
+            <button id="set-player-game">Set the player's name</button>
         </div>
     </dialog>
 
